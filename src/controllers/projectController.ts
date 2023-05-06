@@ -1,15 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
-import { createProjectStructureFromYaml } from '../services/projectService';
+import { ProjectStructure, createProjectStructureFromJson, 
+} from '../services/projectService';
 
-export async function uploadYamlAndReturnZip(req: Request, res: Response, next: NextFunction): Promise<void> {
+
+export async function generateJsonAndReturnZip(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    if (!req.file || !req.file.buffer) {
-      res.status(400).json({ error: 'No file or buffer found in the request.' });
+    console.log("generateJsonAndReturnZip starting..")
+    const prompt = req.body.prompt;
+    console.log("prompt: ", prompt)
+    if (!prompt) {
+      res.status(400).json({ error: 'No prompt found in the request.' });
       return;
     }
 
-    const yamlContent = req.file.buffer.toString();
-    const zipBuffer = await createProjectStructureFromYaml(yamlContent);
+    const generatedJson = await generateJsonFromPrompt(prompt);
+    console.log("Generated JSON: ", JSON.stringify(generatedJson, null, 2))
+    const zipBuffer = await createProjectStructureFromJson(generatedJson);
 
     res.setHeader('Content-Type', 'application/zip');
     res.setHeader('Content-Disposition', 'attachment; filename=project.zip');
@@ -18,3 +24,39 @@ export async function uploadYamlAndReturnZip(req: Request, res: Response, next: 
     next(error);
   }
 }
+
+export async function createProjectFromPrompt(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const prompt  = req.query.prompt as string;
+  console.log
+      if (!prompt) {
+        res.status(400).json({ error: 'No prompt provided in the request.' });
+        return;
+      }
+  
+      const generatedYaml = await generateJsonFromPrompt(prompt as string);
+      const zipBuffer = await createProjectStructureFromJson(generatedYaml);
+  
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', 'attachment; filename=project.zip');
+      res.send(zipBuffer);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  export async function generateJsonFromPrompt(prompt: string): Promise<ProjectStructure> {
+    console.log("generateJsonFromPrompt starting..")
+    // ... (replace this with your actual implementation)
+    const jsonObject: ProjectStructure = {
+      "project_name": {
+        "server.js": "",
+        "package.json": "",
+        "routes": {
+          "hello.js": ""
+        }
+      }
+    };
+    return jsonObject;
+  }
+  
