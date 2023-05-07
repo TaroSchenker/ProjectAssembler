@@ -2,7 +2,7 @@ require('dotenv').config()
 import express from 'express';
 import multer from 'multer';
 import cors from 'cors';  
-import { generateJsonAndReturnZip } from './controllers/projectController';
+import { generateJsonAndReturnZip } from './controllers/generateJsonController';
 import { generateYamlAndReturnZip } from './controllers/gptController';
 
 const app = express();
