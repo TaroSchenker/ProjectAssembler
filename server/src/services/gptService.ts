@@ -9,10 +9,10 @@ export async function generateJsonFromPrompt(prompt: string): Promise<string> {
   console.log("generateYamlFromPrompt starting..")
   const result = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `Create a JSON object representing a project structure based on the following description: ${prompt}. The output should be a structured JSON object with folder names as keys and their values being either an empty string (for files) or a nested JSON object (for folders).
+    prompt: `Create a JSON object representing a typical node js project file structure based on the following description: ${prompt}. The output should be a structured JSON object with folder names as keys and their values being either an empty string (for files) or a nested JSON object (for folders). 
     `,
     max_tokens: 2000,
-    n: 1,
+    n: 1, 
     stop: null,
     temperature: 0.8,
   });

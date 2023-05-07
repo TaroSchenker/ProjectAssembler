@@ -1,7 +1,0 @@
-folders:
-  src:
-    files:
-      - index.ts: "console.log('Hello, world!');"
-  test:
-    files:
-      - index.test.ts: "import '../src/index';\n\ndescribe('Sample test', () => {\n  test('should pass', () => {\n    expect(true).toBe(true);\n  });\n});"

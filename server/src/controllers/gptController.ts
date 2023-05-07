@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { generateYamlFromPrompt } from '../services/gptService';
-import { createProjectStructureFromYaml } from '../services/projectService';
+
 
 export async function generateYamlAndReturnZip(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
@@ -12,13 +11,9 @@ console.log("prompt: ", prompt)
       return;
     }
 
-    const generatedYaml = await generateYamlFromPrompt(prompt);
-    console.log("Generated YAML: ", generatedYaml)
-    const zipBuffer = await createProjectStructureFromYaml(generatedYaml);
-
     res.setHeader('Content-Type', 'application/zip');
     res.setHeader('Content-Disposition', 'attachment; filename=project.zip');
-    res.send(zipBuffer);
+    res.send("zipBuffer");
   } catch (error) {
     next(error);
   }
