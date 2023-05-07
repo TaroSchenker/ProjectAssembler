@@ -17,6 +17,7 @@ export async function generateJsonFromPrompt(prompt: string): Promise<string> {
     temperature: 0.8,
   });
   
+
   if(!result.data.choices[0].text) throw new Error("No JSON generated");
   const generatedJson = result.data.choices[0].text.trim();
   return generatedJson;
