@@ -1,5 +1,4 @@
 import { Configuration, OpenAIApi } from 'openai';
-import { fixYamlIndentation, fixYamlIndentationAndColons } from './projectService';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -18,15 +17,7 @@ export async function generateJsonFromPrompt(prompt: string): Promise<string> {
     temperature: 0.8,
   });
   
-  
-
-  if(!result.data.choices[0].text) throw new Error("No YAML generated");
-  const generatedYaml = result.data.choices[0].text.trim();
-  const fixedYaml = fixYamlIndentationAndColons(generatedYaml);
-  console.log("Generated YAML: ", generatedYaml);
-  console.log("Fixed YAML: ", fixedYaml);
-  
-//   const fixedYaml = fixYamlIndentation(generatedYaml);
-// console.log("Fixed YAML: ", fixedYaml);
-  return fixedYaml;
+  if(!result.data.choices[0].text) throw new Error("No JSON generated");
+  const generatedJson = result.data.choices[0].text.trim();
+  return generatedJson;
 }

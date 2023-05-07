@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ProjectStructure, createProjectStructureFromJson, 
 } from '../services/projectService';
+import { generateJsonFromPrompt } from '../services/gptService';
 
 
 export async function generateJsonAndReturnZip(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -34,8 +35,8 @@ export async function createProjectFromPrompt(req: Request, res: Response, next:
         return;
       }
   
-      const generatedYaml = await generateJsonFromPrompt(prompt as string);
-      const zipBuffer = await createProjectStructureFromJson(generatedYaml);
+      const generatedJson = await generateJsonFromPrompt(prompt);
+      const zipBuffer = await createProjectStructureFromJson(generatedJson);
   
       res.setHeader('Content-Type', 'application/zip');
       res.setHeader('Content-Disposition', 'attachment; filename=project.zip');
@@ -44,19 +45,3 @@ export async function createProjectFromPrompt(req: Request, res: Response, next:
       next(error);
     }
   }
-
-  export async function generateJsonFromPrompt(prompt: string): Promise<ProjectStructure> {
-    console.log("generateJsonFromPrompt starting..")
-    // ... (replace this with your actual implementation)
-    const jsonObject: ProjectStructure = {
-      "project_name": {
-        "server.js": "",
-        "package.json": "",
-        "routes": {
-          "hello.js": ""
-        }
-      }
-    };
-    return jsonObject;
-  }
-  
