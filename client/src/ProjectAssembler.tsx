@@ -10,7 +10,8 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 
 import axios from "axios";
-
+import Boxbg from "../src/assets/boxbg.png"
+import "../src/App.css"
 const ProjectAssembler = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,8 +52,20 @@ const ProjectAssembler = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" component="h1" gutterBottom>
+    <Container
+      maxWidth="sm"
+      sx={{
+        bgcolor: "rgba(255, 255, 255, 0.7)", // Set background color to white with 80% opacity
+        borderRadius: "4px", // Add border-radius
+        padding: "2rem", // Add padding
+      }}
+    >
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        color="text.primary" // Set text color to primary (usually black)
+      > 
         Project Assembler
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -66,6 +79,10 @@ const ProjectAssembler = () => {
           onChange={(e) => setProjectDescription(e.target.value)}
           required
           margin="normal"
+                    sx={{
+            backgroundColor: "rgba(255, 255, 255, 0.9)", // Set background color to white with 90% opacity
+          }}
+
         />
         <Box
           display="flex"
@@ -80,7 +97,7 @@ const ProjectAssembler = () => {
             startIcon={<SaveIcon />}
             disabled={loading}
           >
-            Generate Project
+            Assemble Project
           </Button>
           {loading && (
             <Box mt={2}>
@@ -90,7 +107,7 @@ const ProjectAssembler = () => {
         </Box>
       </form>
       {downloadUrl && (
-        <Box mt={2}>
+        <Box mx={2}>
           <Typography variant="h6">Download your project:</Typography>
           <Button href={downloadUrl} variant="outlined" color="secondary">
             Download ZIP

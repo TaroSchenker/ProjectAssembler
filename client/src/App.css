@@ -1,7 +1,33 @@
-#root {
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+
+.App {
+  box-sizing: border-box;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  min-height: 100vh;
 }
 
+tainer-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../src/assets/boxbg.png);
+  background-size: 20px;
+  background-repeat: repeat;
+  background-position: center center;
+  border-radius: 4px;
+  z-index: 0;
+}
