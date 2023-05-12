@@ -7,7 +7,7 @@ const openai = new OpenAIApi(configuration);
 
 export async function generateJsonFromChatGPT4(prompt: string): Promise<string> {
   console.log("chat gpt 4 generation starting..");
-const promptTemplate = `Given the following project description, create a JSON object representing a well-structured file hierarchy for the project. The output should be a structured JSON object with folder names as keys and their values being either an empty string (for files) or a nested JSON object (for folders). 
+const promptTemplate = `Given the following project description, create a JSON object representing a well-structured file hierarchy for the project. The output should be a structured JSON object with folder names as keys and their values being either an empty string or the relevant / boilerplate code for the file  (for files),or a nested JSON object (for folders). 
 
 Project description: ${prompt}
 
