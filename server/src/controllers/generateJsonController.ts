@@ -16,8 +16,6 @@ export async function generateJsonAndReturnZip(req: Request, res: Response, next
 
     const generatedJson = await generateJsonFromChatGPT4(prompt);
        console.log("Generated JSON: ", JSON.stringify(generatedJson, null, 2))
-    // const refinedJson = await improveJsonFromPrompt(prompt, generatedJson); 
-    // console.log("refined JSON: ", JSON.stringify(refinedJson, null, 2))
     const zipBuffer = await createProjectStructureFromJson(generatedJson);
 
     res.setHeader('Content-Type', 'application/zip');
