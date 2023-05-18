@@ -72,6 +72,7 @@ const ProjectAssembler = () => {
         <TextField
           label="Project Description"
           variant="outlined"
+          placeholder=" a Node.js Express server that connects to the Twitter API and tweets at a regular schedule"
           fullWidth
           multiline
           rows={4}
