@@ -10,17 +10,16 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 
 import axios from "axios";
-import Boxbg from "../src/assets/boxbg.png"
 import "../src/App.css"
 const ProjectAssembler = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
-
+  const [message, setMessage] = useState("");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const response = await axios.post(
         "http://localhost:3000/api/generate",
@@ -28,19 +27,18 @@ const ProjectAssembler = () => {
           prompt: projectDescription,
         },
         { responseType: "arraybuffer" }
-      ); // Set responseType to arraybuffer
-
-      // Create a Blob from the zip buffer and generate an object URL
+      ); 
+  
       const zipBlob = new Blob([response.data], { type: "application/zip" });
       const zipUrl = URL.createObjectURL(zipBlob);
-
-      // Create a temporary anchor element and trigger a click to download the file
+  
       const link = document.createElement("a");
       link.href = zipUrl;
       link.download = "project.zip";
       link.click();
-
-      // Revoke the object URL after use
+  
+      setMessage("File has been downloaded! Check your download folder."); // Set message
+  
       setTimeout(() => {
         URL.revokeObjectURL(zipUrl);
       }, 100);
@@ -50,6 +48,7 @@ const ProjectAssembler = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <Container
@@ -106,14 +105,20 @@ const ProjectAssembler = () => {
           )}
         </Box>
       </form>
-      {downloadUrl && (
+      {/* {downloadUrl && (
         <Box mx={2}>
           <Typography variant="h6">Download your project:</Typography>
           <Button href={downloadUrl} variant="outlined" color="secondary">
             Download ZIP
           </Button>
         </Box>
-      )}
+      )} */}
+
+    {message && (
+      <Box mx={2}>
+        <Typography variant="h6">{message}</Typography>
+      </Box>
+    )}
     </Container>
   );
 };
